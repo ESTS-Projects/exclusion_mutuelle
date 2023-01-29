@@ -1,19 +1,23 @@
-class Counter {
+class Counter3 {
     public int count;
-    public static boolean M = false;
+    private static int T = 0;
+    private static boolean[] C = { false, false };
 
-    public Counter() {
+    public Counter3() {
         count = 0;
     }
 
     public synchronized void increment() {
+        int id = T;
+
         while (true) {
-            while (M) {
+            C[id] = true;
+
+            while (C[1 - id]) {
             }
 
-            M = true;
             count++;
-            M = false;
+            C[id] = false;
             break;
         }
     }
@@ -24,9 +28,9 @@ class Counter {
     }
 }
 
-public class Exercice1 {
+public class Exercice3 {
     public static void main(String[] args) throws Exception {
-        Counter counter = new Counter();
+        Counter3 counter = new Counter3();
 
         Thread t1 = new Thread(new Runnable() {
             @Override
